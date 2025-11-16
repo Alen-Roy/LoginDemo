@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:logindemoapp/featuers/auth/presentation/cubits/pages/login_page.dart';
 import 'package:logindemoapp/firebase_options.dart';
+import 'package:logindemoapp/themes/dark_mode.dart';
+import 'package:logindemoapp/themes/light_mode.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +17,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Scaffold());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: LoginPage(),
+      theme: lightMode,
+      darkTheme: darkMode,
+    );
   }
 }

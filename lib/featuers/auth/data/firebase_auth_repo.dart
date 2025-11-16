@@ -25,7 +25,11 @@ class FirebaseAuthRepo implements AuthRepo {
 
   @override
   Future<void> logOut() async {
-    await firebaseAuth.signOut();
+    try {
+      await firebaseAuth.signOut();
+    } catch (e) {
+      throw Exception("Error failed to logOut $e");
+    }
   }
 
   @override
@@ -60,8 +64,12 @@ class FirebaseAuthRepo implements AuthRepo {
   }
 
   @override
-  Future<String> sendPasswordResetEmail(String email) {
-    // TODO: implement sendPasswordResetEmail
-    throw UnimplementedError();
+  Future<String> sendPasswordResetEmail(String email) async {
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+      return "Password reset email! Check your inbox";
+    } catch (e) {
+      return "an error occured $e";
+    }
   }
 }
