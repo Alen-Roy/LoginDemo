@@ -3,16 +3,25 @@ import 'package:logindemoapp/featuers/auth/presentation/components/my_button.dar
 import 'package:logindemoapp/featuers/auth/presentation/components/my_textfield.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final void Function()? togglePages;
+  const RegisterPage({super.key, required this.togglePages});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final nameControler = TextEditingController();
   final emailController = TextEditingController();
 
   final pwController = TextEditingController();
+  final confirmPwController = TextEditingController();
+  void register() {
+    final String name = nameControler.text;
+    final String email = emailController.text;
+    final String password = pwController.text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,13 +38,20 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               SizedBox(height: 25),
               Text(
-                "D E M O  R E G I S T E R",
+                "Lets Create An Account For You",
                 style: TextStyle(
                   fontSize: 16,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
               ),
               SizedBox(height: 25),
+
+              MyTextfield(
+                controller: nameControler,
+                hintText: "Full Name",
+                obsecureText: true,
+              ),
+              SizedBox(height: 10),
               MyTextfield(
                 controller: emailController,
                 hintText: "Enter your email",
@@ -47,35 +63,33 @@ class _RegisterPageState extends State<RegisterPage> {
                 hintText: "Password",
                 obsecureText: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Forgot Password",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+              SizedBox(height: 10),
+              MyTextfield(
+                controller: confirmPwController,
+                hintText: "Confirm Password",
+                obsecureText: true,
               ),
+
               SizedBox(height: 25),
-              MyButton(text: "LOGIN", onTap: () {}),
+              MyButton(text: "SIGN UP", onTap: () {}),
               SizedBox(height: 25),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have an account?",
+                    "Already have an account?",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                  Text(
-                    "Register now",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
+                  GestureDetector(
+                    onTap: widget.togglePages,
+                    child: Text(
+                      "Login now",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
                 ],

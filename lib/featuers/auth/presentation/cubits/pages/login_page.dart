@@ -3,7 +3,8 @@ import 'package:logindemoapp/featuers/auth/presentation/components/my_button.dar
 import 'package:logindemoapp/featuers/auth/presentation/components/my_textfield.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final void Function()? togglePages;
+  const LoginPage({super.key, required this.togglePages});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -71,11 +72,14 @@ class _LoginPageState extends State<LoginPage> {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                  Text(
-                    "Register now",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
+                  GestureDetector(
+                    onTap: widget.togglePages,
+                    child: Text(
+                      "Register now",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
                 ],
