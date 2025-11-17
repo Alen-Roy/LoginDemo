@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logindemoapp/featuers/auth/data/firebase_auth_repo.dart';
+import 'package:logindemoapp/featuers/auth/presentation/components/loading.dart';
 import 'package:logindemoapp/featuers/auth/presentation/cubits/auth_cubit.dart';
 import 'package:logindemoapp/featuers/auth/presentation/cubits/auth_states.dart';
 import 'package:logindemoapp/featuers/auth/presentation/cubits/pages/auth_page.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
             if (state is Authenticated) {
               return const HomePage();
             } else {
-              return Center(child: CircularProgressIndicator());
+              return Loading();
             }
           },
           listener: (context, state) {

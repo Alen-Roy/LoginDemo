@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logindemoapp/featuers/auth/presentation/cubits/auth_cubit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +12,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Home")));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Home"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              final authCubit = context.read<AuthCubit>();
+              authCubit.logout();
+            },
+            icon: Icon(Icons.logout_outlined),
+          ),
+        ],
+      ),
+    );
   }
 }

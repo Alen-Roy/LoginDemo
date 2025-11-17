@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logindemoapp/featuers/auth/presentation/components/my_button.dart';
 import 'package:logindemoapp/featuers/auth/presentation/components/my_textfield.dart';
+import 'package:logindemoapp/featuers/auth/presentation/cubits/auth_cubit.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -19,7 +21,34 @@ class _RegisterPageState extends State<RegisterPage> {
   void register() {
     final String name = nameControler.text;
     final String email = emailController.text;
-    final String password = pwController.text;
+    final String pw = pwController.text;
+    final String confirmPw = confirmPwController.text;
+    final authCubit = context.read<AuthCubit>();
+    if (email.isNotEmpty &&
+        pw.isNotEmpty &&
+        name.isNotEmpty &&
+        confirmPw.isNotEmpty) {
+      if (pw == confirmPw) {
+        authCubit.register(name, email, pw);
+      } else {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Passwords do not match!")));
+      }
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Please complete all fields!')));
+    }
+  }
+
+  @override
+  void dispose() {
+    nameControler.dispose();
+    emailController.dispose();
+    pwController.dispose();
+    confirmPwController.dispose();
+    super.dispose();
   }
 
   @override
@@ -49,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
               MyTextfield(
                 controller: nameControler,
                 hintText: "Full Name",
-                obsecureText: true,
+                obsecureText: false,
               ),
               SizedBox(height: 10),
               MyTextfield(
@@ -71,7 +100,12 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
 
               SizedBox(height: 25),
-              MyButton(text: "SIGN UP", onTap: () {}),
+              MyButton(
+                text: "SIGN UP",
+                onTap: () {
+                  register();
+                },
+              ),
               SizedBox(height: 25),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
